@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>To-Do List</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-app.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-database.js"></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+      body {
+        background-image: url(bg.jpg);
+        background-position: center; /* Center the image */
+        background-repeat: repeat; /* Do not repeat the image */
+        background-size: cover; /* Resize the background image to cover the entire container */
+      }
+      li {
+        font-family: "Source Sans Pro" sans-serif;
+        font-weight: 500;
+        font-size: 30px;
+        color: ghostwhite;
+        list-style-type: square;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      style="background-color: transparent;"
+      class="navbar col-md-6 mx-auto navbar-extend-sm navbar-transparent justify-content-center"
+    >
+      <div style="justify-content: center">
+        <h2 style="color: ghostwhite; text-justify: center">To-Do-List</h2>
+      </div>
+    </div>
+
+    <div class="row mx-auto">
+      <div class="col-lg-8 mx-auto">
+        <div style="align-items: flex-start" class="col-lg-4 mx-auto">
+          <input
+            class="form-control"
+            placeholder="Enter the To-Do Item"
+            type="text"
+            name="in"
+            id="in"
+          />
+        </div>
+        <div style="align-items: flex-end" class="col-lg-4 mx-auto">
+          <button
+            style="margin-top: 10px;"
+            class="btn btn-outline-light"
+            onclick="add()"
+          >
+            ADD
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      style=" padding-top: 2%; justify-content: center; background-color: transparent; opacity: 0.8;"
+      class="card col-md-3 mx-auto"
+    >
+      <div id="to" class="list ">
+        <ul id="list"></ul>
+      </div>
+    </div>
+  </body>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyCmCREHfIWEPssX0d7dut0IPKPb8DBpml0",
+      authDomain: "todolist-40a80.firebaseapp.com",
+      databaseURL: "https://todolist-40a80.firebaseio.com",
+      projectId: "todolist-40a80",
+      storageBucket: "todolist-40a80.appspot.com",
+      messagingSenderId: "910831599000",
+      appId: "1:910831599000:web:fed9fc90b43e141960ffed"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    var db = firebase
+      .database()
+      .ref()
+      .child("list");
+    //var li = db.child("todo");
+    var uls = document.getElementById("list");
+
+    db.on("child_added", snap => {
+      var lis = document.createElement("li");
+      lis.innerText = snap.val();
+      lis.id = snap.key;
+      uls.appendChild(lis);
+    });
+    db.on("child_changed", snap => {
+      var lichanged = document.getElementById(snap.key);
+      lichanged.innerText = snap.val();
+    });
+    function add() {
+      var text = document.getElementById("in").value;
+      var random = Math.floor(Math.random() * 100) + 1;
+      var ref = firebase
+        .database()
+        .ref()
+        .child("list");
+      ref.child(random).set(text);
+      document.getElementById("in").value = "";
+    }
+  </script>
+</html>
