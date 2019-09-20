@@ -5,7 +5,7 @@
     "display" : "standalone",
     "orientation" : "portrait",
     "lang" : "English",
-    icons": [
+    "icons": [
     {
       "src": "icon-192x192.png",
       "type": "image/png",
