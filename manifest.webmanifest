@@ -3,7 +3,7 @@
     "description" : "To-Do list is to add the upcoming tasks which have to be done",
     "start_url" : "https://naresh3599.github.io/to-do-list-firebase/",
     "display" : "standalone",
-    "orientation" : "landscape",
+    "orientation" : "portrait",
     "lang" : "English",
     "icons" : [
     ]}
